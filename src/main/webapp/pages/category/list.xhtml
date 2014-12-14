@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="../main.xhtml">
+
+	<ui:define name="content">
+		<f:view>
+			<f:event listener="#{categoryMB.onLoad}" type="preRenderView" />
+		</f:view>
+
+		<p:panel id="categoryPanel" header="#{labels.category}">
+			<h:form id="categoryForm">
+				<p:commandButton widgetVar="addButton" value="#{labels.button_add}"
+					action="/pages/category/addEdit.faces" ajax="false"
+					actionListener="#{categoryAddEditMB.add}" />
+				<p:commandButton widgetVar="deleteButton"
+					value="#{labels.button_delete}" action="#{categoryMB.delete}"
+					update="categoryDataTable" oncomplete="unselectRows();"  />
+				<p:commandButton widgetVar="updateButton"
+					value="#{labels.button_update}" update="categoryDataTable"
+					action="/pages/category/addEdit.faces"
+					actionListener="#{categoryAddEditMB.update}" />
+
+				<p:dataTable id="categoryDataTable" widgetVar="dataTable"
+					var="category" loadingMessage="#{labels.category_load}"
+					value="#{categoryMB.categories}" paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,20" rowKey="#{category.id}"
+					selectionMode="single">
+
+					<p:ajax event="rowSelect" listener="#{categoryMB.selectCategory}"
+						oncomplete="enableButtons();" />
+					<p:ajax event="page" listener="#{categoryMB.unselectCategory}"
+						oncomplete="unselectRows();" />
+					<p:ajax event="rowUnselect" listener="#{categoryMB.unselectCategory}"
+						oncomplete="disableButtons();" />
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.category_id}" />
+						</f:facet>
+						<h:outputText value="#{category.id}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.category_name}" />
+						</f:facet>
+						<h:outputText value="#{category.categoryName}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.category_description}" />
+						</f:facet>
+						<h:outputText value="#{category.description}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="../main.xhtml">
+
+	<ui:define name="content">
+		<f:view>
+			<f:event listener="#{userMB.onLoad}" type="preRenderView" />
+		</f:view>
+
+		<p:panel id="userPanel" header="#{labels.user}">
+			<h:form id="userForm">
+				<p:commandButton widgetVar="addButton" value="#{labels.button_add}"
+					action="/pages/user/addEdit.faces" ajax="false"
+					actionListener="#{userAddEditMB.add}" />
+				<p:commandButton widgetVar="deleteButton"
+					value="#{labels.button_delete}" action="#{userMB.delete}"
+					update="userDataTable" oncomplete="unselectRows();"  />
+				<p:commandButton widgetVar="updateButton"
+					value="#{labels.button_update}" update="userDataTable"
+					action="/pages/user/addEdit.faces"
+					actionListener="#{userAddEditMB.update}" />
+
+				<p:dataTable id="userDataTable" widgetVar="dataTable" var="user"
+					loadingMessage="#{labels.user_load}" value="#{userMB.users}"
+					paginator="true" rows="10"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,20" rowKey="#{user.id}"
+					selectionMode="single">
+
+					<p:ajax event="rowSelect" listener="#{userMB.selectUser}"
+						oncomplete="enableButtons();" />
+					<p:ajax event="page" listener="#{userMB.unselectUser}"
+						oncomplete="unselectRows();" />
+					<p:ajax event="rowUnselect" listener="#{userMB.unselectUser}"
+						oncomplete="disableButtons();" />
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.user_id}" />
+						</f:facet>
+						<h:outputText value="#{user.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.user_name}" />
+						</f:facet>
+						<h:outputText value="#{user.name}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.user_username}" />
+						</f:facet>
+						<h:outputText value="#{user.username}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.user_password}" />
+						</f:facet>
+						<h:outputText value="#{user.password}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{labels.user_role}" />
+						</f:facet>
+						<h:outputText value="#{user.role}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

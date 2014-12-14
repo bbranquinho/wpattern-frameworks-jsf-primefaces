@@ -1,0 +1,25 @@
+/*.ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd {
+	border: none;
+} */
+
+.ui-widget {
+	font-size: 90% !important;	
+}
+
+.ui-panelmenu .ui-panelmenu-header a {
+	color: black;
+}
+
+#mainFooter {
+	font-family: Verdana,sans-serif;
+	color: grey;
+	font-size: 10px;
+	font-weight: bolder;
+}
+
+#mainHeader {
+	font-family: Verdana,sans-serif;
+	color: black;
+	font-size: 60px;
+	font-weight: bolder;
+}

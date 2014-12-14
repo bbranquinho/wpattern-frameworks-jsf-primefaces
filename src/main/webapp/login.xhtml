@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/public/images/wpattern_wproject.ico" />
+	<title>WPattern Frameworks JSF Primefaces</title>
+</h:head>
+
+<h:body onload="document.content.dialog.login.j_username.focus();">
+	<div id="content" title="WPattern Login">
+		<p:dialog header="#{labels.login_go}" id="dialog" minWidth="400"
+			width="290" modal="true" closable="false" position="center"
+			showEffect="slide" draggable="true" resizable="false" visible="true">
+			<form name='login' action="j_spring_security_check" method='post'>
+				<p:panelGrid columns="2">
+					<h:outputLabel for="j_username" value="#{labels.login_username} *: " />
+					<p:inputText id="j_username" requerid="true" />
+
+					<h:outputLabel for="j_password" value="#{labels.login_password} *: " />
+					<p:password id="j_password" requerid="true" />
+
+					<f:facet name="footer">
+						<p:row>
+							<c:if test="${param.erro == 'true'}">
+								<h:outputText value="#{labels.login_invalid}" style="color: red; font-size: small;" /> <br/> <br/>
+							</c:if>
+							
+							<p:outputPanel style="width: 100%; text-align:center" layout="block">
+								<input name="submit" type="submit" value="#{labels.login_action_go}" />
+							</p:outputPanel>
+						</p:row>
+					</f:facet>
+				</p:panelGrid>
+			</form>
+		</p:dialog>
+	</div>
+</h:body>
+</html>

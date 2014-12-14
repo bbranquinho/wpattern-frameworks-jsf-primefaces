@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="../main.xhtml">
+
+	<ui:define name="content">
+		<h:form>
+			<h:inputHidden value="#{userAddEditMB.user.id}" />
+
+			<p:panelGrid columns="2">
+				<f:facet name="header">
+					<p:outputLabel value="#{userAddEditMB.title}" />
+				</f:facet>
+
+				<p:outputLabel value="#{labels.user_name}: " />
+				<p:inputText value="#{userAddEditMB.user.name}" />
+				
+				<p:outputLabel value="#{labels.user_username}: " />
+				<p:inputText value="#{userAddEditMB.user.username}" />
+				
+				<p:outputLabel value="#{labels.user_password}: " />
+				<p:inputText value="#{userAddEditMB.user.password}" />
+				
+				<p:outputLabel value="#{labels.user_role}: " />
+				<p:inputText value="#{userAddEditMB.user.role}" />
+
+				<f:facet name="footer">
+					<p:row>
+						<p:outputPanel style="width: 100%; text-align:center"
+							layout="block">
+
+							<p:commandButton value="#{labels.button_save}"
+								action="list.faces" actionListener="#{userAddEditMB.save}"
+								style="margin: 130 auto;" ajax="false" />
+							<p:commandButton value="#{labels.button_cancel}"
+								action="/pages/user/list.faces"
+								actionListener="#{userAddEditMB.cancel}"
+								style="margin: 130 auto;" ajax="false" />
+						</p:outputPanel>
+					</p:row>
+				</f:facet>
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
